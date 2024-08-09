@@ -8,18 +8,9 @@
     </head>
 
     <body>
-        <h1>Hello World</h1>
-        <button id="btn">Hi</button>
-
-        <script src="/socket.io/socket.io.js"></script>
-        <script>
-            var socket = io();
-            var btn = document.getElementById("btn");
-
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                socket.emit("test", "clicked");
-            });
-        </script>
+        <div class="container mt-3">
+            <h1>Hello There !</h1>
+            <h6><a href="/makePoll">Make Poll</a></h6>
+        </div>
     </body>
 </html>
