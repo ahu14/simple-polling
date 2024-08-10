@@ -23,8 +23,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 const homeRoute = require("./src/routes/homeRoute");
+const getPollRoute = require("./src/routes/getPollRoute");
 const makePollRoute = require("./src/routes/makePollRoute");
+
 app.all("/", homeRoute);
+app.all("/getPoll/:link", getPollRoute);
 app.all("/makePoll", makePollRoute);
 
 

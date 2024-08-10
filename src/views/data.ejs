@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,15 @@
     </head>
 
     <body>
-        <div class="p-3">
+        <div class="container mt-3">
+            <h3><%= dt.title %></h3>
+            
+            <% dt.polling.forEach(function(poll){ %>
+                <button class="btn btn-outline-primary" id="btn-<%= poll._id %>"><%= poll.choice %></button> 
+            <% }) %>
+        </div>
+
+        <!--<div class="p-3">
             <h1>which indomie is more delicious</h1>
             <button type="button" id="btn-1" class="btn btn-outline-primary">soup indomie</button>
             <button type="button" id="btn-2" class="btn btn-outline-primary">fried indomie</button>
@@ -40,7 +48,7 @@
 
             if (document.cookie == "HasVisited=true"){
                 document.body.style.background = "pink";
-            }
+        }-->
         </script>
     </body>
 </html>

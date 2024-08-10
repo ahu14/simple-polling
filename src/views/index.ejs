@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,9 @@
         <div class="container mt-3">
             <h1>Hello There !</h1>
             <h6><a href="/makePoll">Make Poll</a></h6>
+            <% dt.forEach(function(d){ %>
+                <a href="/getPoll/<%=d._id%>"><%=d.title%></a>
+            <% }); %>
         </div>
     </body>
 </html>
