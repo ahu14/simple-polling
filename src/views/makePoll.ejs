@@ -11,23 +11,71 @@
         <div class="container mt-3">
             <h2>Make Polling !</h2>
             <form method="post" action="/makePoll">
-                <div class="mb-3">
-                <label for="title" class="form-title">Question : </label>
-                <textarea class="form-control" id="title" name="title"></textarea>
+                <div id="make-poll">
+                    <div class="mb-3">
+                        <label for="title" class="form-title">Question : </label>
+                        <textarea class="form-control mt-2 mb-4" id="title" name="title" rows="1"></textarea>
+                    </div>
+    
+                    <div class="mb-3">
+                        <label for="choice1" class="form-title">Choice : </label>
+                        <textarea class="form-control mt-2 mb-4" id="choice1" name="choice1" rows="1"></textarea>
+                    </div>
+    
+                    <div class="mb-3">
+                        <label for="choice2" class="form-title">Choice : </label>
+                        <textarea class="form-control mt-2 mb-4" id="choice2" name="choice2" rows="1"></textarea>
+                    </div>
                 </div>
 
-                <div class="mb-3">
-                    <label for="choice1" class="form-title">Choices : </label>
-                    <textarea class="form-control" id="choice1" name="choice1"></textarea>
-                </div>
-
-                <div class="mb-3">
-                    <label for="choice2" class="form-title">Choices : </label>
-                    <textarea class="form-control" id="choice2" name="choice2"></textarea>
-                </div>
-
+                <button class="btn btn-dark" onclick="addChoice(event)">Add Choice</button>
+                <button class="btn btn-danger" onclick="deleteChoice(event)">Delete Choice</button>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            let num = 3;
+
+            let addChoice = (event) => {
+                event.preventDefault();
+
+                if (num < 10){
+                    let mbClass = document.createElement("div");
+                    mbClass.className = "mb-3";
+
+                    let label = document.createElement("label");
+                    label.htmlFor = `choice${num}`;
+                    label.className = "form-title";
+                    label.innerHTML = "Choices : ";
+
+                    let textarea = document.createElement("textarea");
+                    textarea.className = "form-control mt-2 mb-4";
+                    textarea.id = `choice${num}`;
+                    textarea.name = `choice${num}`;
+                    textarea.rows = "1";
+
+                    let makePoll = document.getElementById("make-poll");
+
+                    makePoll.appendChild(mbClass);
+                    mbClass.appendChild(label);
+                    mbClass.appendChild(textarea);
+                }
+
+                num += 1;
+            }
+
+            let deleteChoice = (event) => {
+                event.preventDefault();
+                
+                if (num > 3){
+                    let makePoll = document.getElementById("make-poll");
+                    let getLastChoice = makePoll.children;
+                    getLastChoice[getLastChoice.length-1].remove();
+                    num -= 1;
+                }
+            }
+        </script>
     </body>
 </html>

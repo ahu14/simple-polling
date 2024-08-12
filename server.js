@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+const polls = require("./src/middleware/model");
 const bodyParser = require("body-parser");
 const {Server} = require("socket.io");
 const mongoose = require("mongoose");
@@ -31,18 +32,34 @@ app.all("/getPoll/:link", getPollRoute);
 app.all("/makePoll", makePollRoute);
 
 
+
 io.on("connection", (socket) => {
     console.log("connected !");
 
-    let dt = {
-        1 : 0,
-        2: 0
-    }
+    socket.on("clicked", async (arg) => {
+        await polls.findById(arg.poll_id)
+        .then(async dt => {
+            for (let i of dt.polling){
+                if (i._id == arg.choice_id){
+                    i.quantity += 1;
+                }
+            }
 
-    socket.on("poll", (arg) => {
-        dt[arg] += 1;
-        console.log(dt);
+            await polls.findByIdAndUpdate(arg.poll_id, dt, {new : true})
+            .then(dt2 => {
+                socket.emit("sendData", dt);
+                console.log("updated !");
+            })
+            .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
     });
+
+    socket.on("getData", async (arg) => {
+        await polls.findById(arg)
+        .then(dt => socket.emit("sendingData", dt))
+        .catch(err => console.log(err))
+    })
 })
 
 
